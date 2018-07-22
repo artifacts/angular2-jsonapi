@@ -11,6 +11,7 @@ import * as qs from 'qs';
 import { DatastoreConfig } from '../interfaces/datastore-config.interface';
 import { ModelConfig } from '../interfaces/model-config.interface';
 import { AttributeMetadata } from '../constants/symbols';
+import 'reflect-metadata';
 
 export type ModelType<T extends JsonApiModel> = { new(datastore: JsonApiDatastore, data: any): T; };
 
@@ -356,7 +357,7 @@ export class JsonApiDatastore {
     };
 
     if (this._headers) {
-      this._headers.forEach((values, name) => {
+      this._headers.forEach((values : any, name: any) => {
         if (name !== undefined) {
           requestHeaders[name] = values;
         }
@@ -364,7 +365,7 @@ export class JsonApiDatastore {
     }
 
     if (customHeaders) {
-      customHeaders.forEach((values, name) => {
+      customHeaders.forEach((values: any, name: any) => {
         if (name !== undefined) {
           requestHeaders[name] = values;
         }
