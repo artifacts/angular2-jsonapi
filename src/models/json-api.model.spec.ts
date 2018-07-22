@@ -127,7 +127,7 @@ describe('JsonApiModel', () => {
       });
 
       describe('update relationships', () => {
-        it ('should return updated relationship', () => {
+        it('should return updated relationship', () => {
           const REL = 'books';
           const BOOK_NUMBER = 1;
           const CHAPTERS_NUMBER = 4;
@@ -147,6 +147,26 @@ describe('JsonApiModel', () => {
           });
         });
       });
+    });
+  });
+
+  describe('hasDirtyAttributes & rollbackAttributes', () => {
+    const author = new Author(datastore, {
+      id: '1',
+      attributes: {
+        name: 'Daniele'
+      }
+    });
+
+    it('should return that has dirty attributes', () => {
+      author.name = 'New Name';
+      expect(author.hasDirtyAttributes).toBeTruthy();
+    });
+
+    it('should to rollback to the initial author name', () => {
+      author.rollbackAttributes();
+      expect(author.name).toEqual('Daniele');
+      expect(author.hasDirtyAttributes).toBeFalsy();
     });
   });
 });
